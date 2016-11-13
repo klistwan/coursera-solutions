@@ -9,7 +9,6 @@ function p = predictOneVsAll(all_theta, X)
 %  for 4 examples) 
 
 m = size(X, 1);
-num_labels = size(all_theta, 1);
 
 % You need to return the following variables correctly 
 p = zeros(size(X, 1), 1);
@@ -29,13 +28,11 @@ X = [ones(m, 1) X];
 %       are in rows, then, you can use max(A, [], 2) to obtain the max 
 %       for each row.
 %       
-
-
-
-
-
-
-
+product = X * all_theta';
+kind = max(product, [], 2);
+for a = 1: m
+    p(a) = find(product(a, :) == kind(a));
+end
 % =========================================================================
 
 
