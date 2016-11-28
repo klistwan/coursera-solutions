@@ -23,9 +23,24 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+possible_values = [0.01 0.03 0.1 0.3 1 3 10 30 100 300];
 
+lowest_error = realmax();
 
-
+for i=1:size(possible_values, 2)
+	for j=1:size(possible_values, 2)
+		potential_C_value = possible_values(i);
+		potential_sigma_value = possible_values(j);
+		model = svmTrain(X, y, potential_C_value, @(x1, x2) gaussianKernel(x1, x2, potential_sigma_value));
+		predictions = svmPredict(model, Xval);
+		current_error = mean(double(predictions ~= yval));
+		if current_error < lowest_error
+			lowest_error = current_error;
+			C = potential_C_value;
+			sigma = potential_sigma_value;
+		end
+	end
+end
 
 
 
