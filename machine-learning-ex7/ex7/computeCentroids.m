@@ -26,15 +26,12 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-
-
-
-
-
-
+for k = 1:K
+	index_of_k = find(idx == k);
+	centroids(k,:) = sum(X(index_of_k, :),1) / length(index_of_k);
+end
 
 % =============================================================
-
 
 end
 
